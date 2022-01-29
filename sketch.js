@@ -1,12 +1,4 @@
-const Engine = Matter.Engine;
-const Render = Matter.Render;
-const World = Matter.World;
-const Bodies = Matter.Bodies;
-const Constraint = Matter.Constraint;
-const Body = Matter.Body;
 
-let engine;
-let world;
 
 var canvas;
 var backgroundImage, car1_img, car2_img, track;
@@ -39,9 +31,7 @@ var nextTiles=[ player1_Start1,player1_Start2,player1_Start3,player1_Start4,midd
    player2_Start1,player2_Start2,player2_Start3,player2_Start4,player2End1,player2End2];
 var c1
 var startingTile=[p1c1,p1c2,p1c3,p1c4,p1c5,p1c6,p1c7];
-var options={
-    isStatic:true
-}
+
 var currentTile;
 var transform=[p1c1,p1c2,p1c3,p1c4,p1c5,p1c6,p1c7];
 function preload() {
@@ -64,8 +54,7 @@ function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
 
   database = firebase.database();
-  engine = Engine.create();
-  world = engine.world;
+  
   
   game = new Game();
   rules= new Rule()
@@ -75,7 +64,7 @@ function setup() {
   button = createImg('./assets/cut_button.png');
   button.position(300,50);
  // button.visible=false
-  button.size(100,50);
+  button.size(50,50);
   button.mouseClicked(rolled);
 
   c1 = createImg('./assets/c2 (2).png');
@@ -86,52 +75,52 @@ function setup() {
   
  // dice= createSprite(300,height-300)
   //dice.addImage(di4)
-  //player1_Start1 = Bodies.circle(760,490,100,options);
- // player1_Start1.visible=false
-  player1_Start2 = Bodies.circle(760,575,100,options);
-  player1_Start3 = Bodies.circle(760,660,100,options);
-  player1_Start4 = Bodies.circle(760,745,100,options);
-  middle1 = Bodies.circle(850,745,100,options);
-  middle2 = Bodies.circle(850,660,100,options);
-  middle3 = Bodies.circle(850,575,100,options); 
-  middle4 = Bodies.circle(850,490,100,options);
-  middle5 = Bodies.circle(850,405,100,options);
-  middle6 = Bodies.circle(850,320,100,options);
-  middle7 = Bodies.circle(850,235,100,options);
-  middle8 = Bodies.circle(850,150,100,options);
-  player1End1 = Bodies.circle(760,150,100,options);
-  player1End2 = Bodies.circle(760,235,100,options);
-  player2_Start1 = Bodies.circle(945,490,100,options);
-  player2_Start2 = Bodies.circle(945,575,100,options);
-  player2_Start3 = Bodies.circle(945,660,100,options);
-  player2_Start4= Bodies.circle(945,745,100,options);
-  player2End1 = Bodies.circle(945,150,100,options);
-  player2End2 = Bodies.circle(945,235,100,options);
-
+  player1_Start1 = createSprite(760,490,50,50);
+ player1_Start1.visible=false
+  player1_Start2 = createSprite(760,575,50,50);
+  player1_Start2.visible=false
+  player1_Start3 = createSprite(760,660,50,50);
+  player1_Start3.visible=false
+  player1_Start4 = createSprite(760,745,50,50);
+  player1_Start4.visible=false
+  middle1 = createSprite(850,745,50,50);
+  middle1.visible=false
+  middle2 = createSprite(850,660,50,50);
+  middle2.visible=false
+  middle3 = createSprite(850,575,50,50); 
+  middle3.visible=false
+  middle4 = createSprite(850,490,50,50);
+  middle4.visible=false
+  middle5 = createSprite(850,405,50,50);
+  middle5.visible=false
+  middle6 = createSprite(850,320,50,50);
+  middle6.visible=false
+  middle7 = createSprite(850,235,50,50);
+  middle7.visible=false
+  middle8 = createSprite(850,150,50,50);
+  middle8.visible=false
+  player1End1 = createSprite(760,150,50,50);
+  player1End1.visible=false
+  player1End2 = createSprite(760,235,50,50);
+  player1End2.visible=false
+  player2_Start1 = createSprite(945,490,50,50);
+  player2_Start1.visible=false
+  player2_Start2 = createSprite(945,575,50,50);
+  player2_Start2.visible=false
+  player2_Start3 = createSprite(945,660,50,50);
+  player2_Start3.visible=false
+  player2_Start4= createSprite(945,745,50,50);
+  player2_Start4.visible=false
+  player2End1 = createSprite(945,150,50,50);
+  player2End1.visible=false
+  player2End2 = createSprite(945,235,50,50);
+  player2End2.visible=false
 
 
   //World.add(world,player1_Start1);
-  World.add(world,player1_Start2);
-  World.add(world,player1_Start3);
-  World.add(world,player1_Start4);
-  World.add(world,middle1);
-  World.add(world,middle2);
-  World.add(world,middle3);
-  World.add(world,middle4);
-  World.add(world,middle5);
-  World.add(world,middle6);
-  World.add(world,middle7);
-  World.add(world,middle8);
-  World.add(world,player1End1);
-  World.add(world,player1End2);
-  World.add(world,player2_Start1);
-  World.add(world,player2_Start2);
-  World.add(world,player2_Start3);
-  World.add(world,player2_Start4);
-  World.add(world,player2End1);
-  World.add(world,player2End2);
+  
 
-  ellipseMode(RADIUS);
+ 
   
  
 }
@@ -144,34 +133,19 @@ function draw() {
     rules.display()
   }
 
-  Engine.update(engine);
+ 
   
   
   if (gameState === 1) {
+
     rules.hide()
     game.play();
     fill("pink")
     //ellipse(player1_Start1.position.x,player1_Start1.position.y,30)
-    ellipse(player1_Start2.position.x,player1_Start2.position.y,30)
-    ellipse(player1_Start3.position.x,player1_Start3.position.y,30)
-    ellipse(player1_Start4.position.x,player1_Start4.position.y,30)
-    ellipse(middle1.position.x,middle1.position.y,30)
-    ellipse(middle2.position.x,middle2.position.y,30)
-    ellipse(middle3.position.x,middle3.position.y,30)
-    ellipse(middle4.position.x,middle4.position.y,30)
-    ellipse(middle5.position.x,middle5.position.y,30)
-    ellipse(middle6.position.x,middle6.position.y,30)
-    ellipse(middle7.position.x,middle7.position.y,30)
-    ellipse(middle8.position.x,middle8.position.y,30)
-    ellipse(player1End1.position.x,player1End1.position.y,30)
-    ellipse(player1End2.position.x,player1End2.position.y,30)
-    ellipse(player2_Start1.position.x,player2_Start1.position.y,30)
-    ellipse(player2_Start2.position.x,player2_Start2.position.y,30)
-    ellipse(player2_Start3.position.x,player2_Start3.position.y,30)
-    ellipse(player2_Start4.position.x,player2_Start4.position.y,30)
-    ellipse(player2End1.position.x,player2End1.position.y,30)
-    ellipse(player2End2.position.x,player2End2.position.y,30)
-   
+    
+   if(mousePressedOver(p1c1)){
+     console.log("hi")
+   }
     
   }
 
@@ -256,7 +230,7 @@ function OnMouseUp(){
     for(var j=0;j<nextTiles.length;j++){
     //  nextTiles[j]=i
      // if(c1.position===nextTiles[0]){
-     c1.position(nextTiles[j].body.position.x,nextTiles[j].body.position.y)
+    // c1.position(nextTiles[j].body.position.x,nextTiles[j].body.position.y)
    // }
   //  else{
     //  c1=p1c1
